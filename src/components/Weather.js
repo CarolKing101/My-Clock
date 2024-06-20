@@ -11,7 +11,7 @@ const Weather = ({ timeZone }) => {
       setError(null);
       try {
         const cityName = timeZone.split('/')[1];
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=YOUR_API_KEY`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=25dbb2565274d871f78e7b8e44a56132`);
         if (!response.ok) {
           throw new Error('Failed to fetch weather data');
         }
