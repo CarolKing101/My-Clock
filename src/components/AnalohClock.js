@@ -3,47 +3,39 @@ import moment from 'moment-timezone';
 import './AnalogClock.css';
 
 const AnalogClock = ({ timeZone }) => {
-  const hourRef = useRef(null);
-  const minuteRef = useRef(null);
-  const secondRef = useRef(null);
+  const clockRef = useRef(null);
 
   useEffect(() => {
     const updateClock = () => {
-      const now = moment().tz(timeZone);
-      const seconds = now.seconds();
-      const minutes = now.minutes();
-      const hours = now.hours();
-
-      const secondDegree = (seconds / 60) * 360;
-      const minuteDegree = (minutes / 60) * 360 + (seconds / 60) * 6;
-      const hourDegree = (hours / 12) * 360 + (minutes / 60) * 30;
-
-      if (secondRef.current) {
-        secondRef.current.style.transform = `rotate(${secondDegree}deg)`;
-      }
-      if (minuteRef.current) {
-        minuteRef.current.style.transform = `rotate(${minuteDegree}deg)`;
-      }
-      if (hourRef.current) {
-        hourRef.current.style.transform = `rotate(${hourDegree}deg)`;
+      const now = moment.tz(timeZone);
+      const second = now.seconds() * 6;
+      const minute = now.minutes() * 6 + now.seconds() * (360 / 3600);
+      const hour = ((now.hours() % 12) / 12) * 360 + 90 + now.minutes() * (360 / 720);
+      
+      if (clockRef.current) {
+        clockRef.current.querySelector('.hour').style.transform = `rotate(${hour}deg)`;
+        clockRef.current.querySelector('.minute').style.transform = `rotate(${minute}deg)`;
+        clockRef.current.querySelector('.second').style.transform = `rotate(${second}deg)`;
       }
     };
 
-    const interval = setInterval(updateClock, 1000);
-    updateClock(); // initial call to set the clock immediately
-
-    return () => clearInterval(interval);
+    const intervalId = setInterval(updateClock, 1000);
+    return () => clearInterval(intervalId);
   }, [timeZone]);
 
   return (
-    <div className="analog-clock">
-      <div className="clock-face">
-        <div ref={hourRef} className="hand hour-hand"></div>
-        <div ref={minuteRef} className="hand minute-hand"></div>
-        <div ref={secondRef} className="hand second-hand"></div>
+    <div ref={clockRef} className="analog-clock">
+      <div className="numbers">
         {[...Array(12)].map((_, i) => (
-          <div key={i} className={`hour-marker hour-marker-${i + 1}`}>{i + 1}</div>
+          <div key={i} className="number" style={{ transform: `rotate(${i * 30}deg)` }}>
+            <div style={{ transform: `rotate(-${i * 30}deg)` }}>{i === 0 ? 12 : i}</div>
+          </div>
         ))}
+      </div>
+      <div className="hands">
+        <div className="hand hour"></div>
+        <div className="hand minute"></div>
+        <div className="hand second"></div>
       </div>
     </div>
   );

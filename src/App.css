@@ -1,64 +1,70 @@
-.App {
-  text-align: center;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+body {
+  background-color: #282c34;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.App.light-theme {
+  background-color: white;
+  color: black;
 }
 
 .App-header {
-  font-size: 3rem;
-  margin: 20px;
+  font-size: 2.5rem;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.settings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.settings label {
+  margin-right: 10px;
+}
+
+.settings select {
+  margin-right: 20px;
 }
 
 .clocks {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-.settings {
+.clock-container {
   margin: 20px;
+  text-align: center;
 }
 
-.form-group {
-  margin: 10px 0;
+.weather {
+  margin-top: 10px;
 }
 
-.dark-theme {
-  background-color: #282c34;
-  color: white;
+.countdown-timer {
+  text-align: center;
+  margin: 20px 0;
 }
 
-.light-theme {
-  background-color: #f5f5f5;
-  color: black;
+.countdown-timer input {
+  margin-right: 10px;
 }
 
-.small-clock .analog-clock {
-  width: 150px;
-  height: 150px;
+.analog-clock .number {
+  font-size: 1.2rem;
 }
 
-.medium-clock .analog-clock {
+.analog-clock.medium {
+  width: 200px;
+  height: 200px;
+}
+
+.analog-clock.large {
   width: 300px;
   height: 300px;
-}
-
-.large-clock .analog-clock {
-  width: 450px;
-  height: 450px;
-}
-
-/* Additional clock styles for dark and light themes */
-.analog-clock {
-  position: relative;
-  border-radius: 50%;
-  margin: 20px auto;
-}
-
-.clock-face {
-  position: relative;
-  width: 100%;
 }

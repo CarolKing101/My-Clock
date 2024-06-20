@@ -1,33 +1,38 @@
 import React, { useState } from 'react';
-import './App.css';
 import AnalogClock from './components/AnalohClock';
 import DigitalClock from './components/DigitalClock';
-import TimeZoneSelector from './components/TimeZoneSelector';
-import Settings from './components/Settings';
-// eslint-disable-next-line
+import SettingsTabs from './components/Tabs';
+import Weather from './components/Weather';
+import CountdownTimer from './components/CountdownTimer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment-timezone';
+import './App.css';
 
 const App = () => {
-  const timeZones = moment.tz.names();
-  const [selectedTimeZone, setSelectedTimeZone] = useState('UTC');
+  const [selectedTimeZone, setSelectedTimeZone] = useState(moment.tz.guess());
   const [theme, setTheme] = useState('dark');
   const [clockSize, setClockSize] = useState('medium');
 
-  const sizeClass = clockSize === 'small' ? 'small-clock' : clockSize === 'large' ? 'large-clock' : 'medium-clock';
-  const themeClass = theme === 'dark' ? 'dark-theme' : 'light-theme';
+  const timeZones = moment.tz.names();
 
   return (
-    <div className={`App ${themeClass}`}>
-      <header className="App-header">
-        <h1>World Clock</h1>
-      </header>
-      <Settings theme={theme} setTheme={setTheme} clockSize={clockSize} setClockSize={setClockSize} />
-      <TimeZoneSelector timeZones={timeZones} selectedTimeZone={selectedTimeZone} onTimeZoneChange={setSelectedTimeZone} />
-      <div className={`clocks ${sizeClass}`}>
+    <div className={`App ${theme}-theme`}>
+      <header className="App-header">World Clock</header>
+      <SettingsTabs
+        theme={theme}
+        setTheme={setTheme}
+        timeZones={timeZones}
+        selectedTimeZone={selectedTimeZone}
+        setSelectedTimeZone={setSelectedTimeZone}
+        clockSize={clockSize}
+        setClockSize={setClockSize}
+      />
+      <div className={`clocks ${clockSize}`}>
         <AnalogClock timeZone={selectedTimeZone} />
         <DigitalClock timeZone={selectedTimeZone} />
       </div>
+      <Weather timeZone={selectedTimeZone} />
+      <CountdownTimer />
     </div>
   );
 };
